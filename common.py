@@ -15,8 +15,11 @@ df_byfeature=df_cleared.drop('Region', axis=1)
 df_byfeature=df_byfeature.set_index('Features')
 df_bycountry=df_cleared.drop('Region', axis=1)
 df_bycountry=df_bycountry.set_index('Country')
+df_orig.head(10)
 
  #par région
 df_byregion=df_cleared.pivot_table(index=['Region','Features'],aggfunc='sum', fill_value=0)
+
+
 
 
