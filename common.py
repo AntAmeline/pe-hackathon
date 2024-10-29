@@ -4,6 +4,9 @@ import geopandas as gpd
 import numpy as np
 import matplotlib.pyplot as plt
 
+
+
+
 df_orig = pd.read_csv('world-country-electricity.csv')
 #sans valeur fausse, numérisé
 df_cleared=df_orig.dropna(how='all',subset=df_orig.columns[3:])
@@ -19,6 +22,10 @@ df_bycountry=df_bycountry.set_index('Country')
 
  #par région
 df_byregion=df_cleared.pivot_table(index=['Region','Features'],aggfunc='sum', fill_value=0)
+
+
+
+
 
 
 
