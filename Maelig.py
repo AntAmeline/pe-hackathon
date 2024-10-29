@@ -15,17 +15,7 @@
 
 # %%
 from common import *
-import matplotlib.pyplot as plt
-import numpy as np
 
-# %%
-
-# %%
-
-
-# %%
-
-        
 
 # %%
 def graph_feature_by_region(df, region, feature) :
@@ -44,10 +34,13 @@ def graph_feature_by_region(df, region, feature) :
 
 
 # %%
+graph_feature_by_region(df_cleared, "Africa", "net generation")
+
+
+# %%
 def graph_feature_by_country(df, country, feature) :
     #masque
     by_feature = df.groupby(by = 'Features')
-    print(by_feature.mean())
     mask_feature_by_country = by_feature.get_group(feature)['Country'] == country
     country_feature = by_feature.get_group(feature)[mask_feature_by_country]
     
@@ -62,10 +55,8 @@ def graph_feature_by_country(df, country, feature) :
 
 
 # %%
-
-# %%
-
-# %%
 graph_feature_by_country(df_cleared, "Algeria", "net generation")
+
+# %%
 
 # %%
