@@ -17,7 +17,8 @@ from common import *
 df['Features'].unique()
 
 # +
-by_Region = df.groupby(by = 'Region')
+by_Region = df_cleared.groupby(by = 'Region')
+by_Year = df_cleared.groupby(by = 'Year')
 
 for region in df['Region'].unique():
     for feature in df['Features'].unique():
@@ -27,13 +28,17 @@ for region in df['Region'].unique():
 
         region_feature.drop(columns = ['Country', 'Features', 'Region'] , inplace = True)
 
-        for column in region_feature.columns :
-            region_feature[column] = pd.to_numeric(region_feature[column], errors = 'coerce')
+        #for column in region_feature.columns :
+         #   region_feature[column] = pd.to_numeric(region_feature[column], errors = 'coerce')
     
         plt.figure()
         region_feature.mean().plot()
-        plt.xlabel((feature + " in " + region + " between 1980 and 2020"))
+        plt.xlabel((feature + " in " + region + " between 1980 and 2021"))
         plt.show()
+        
+#for feature in df_cleared['Feature'].unique():
+#    mask_year = by_Year.get_group('2021')['Features'] == feature
+    
 # -
 
 
