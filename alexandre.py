@@ -12,8 +12,17 @@
 #     name: python3
 # ---
 
-import common
+from common import *
 
+df['Features'].unique()
 
+# +
+by_Region = df.groupby(by = 'Region')
+
+mask_net_get_africa = by_Region.get_group('Africa')['Features'] == 'net generation'
+net_gen_africa = by_Region.get_group('Africa')[mask_net_get_africa]
+
+net_gen_africa
+# -
 
 
