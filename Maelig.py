@@ -15,55 +15,57 @@
 
 # %%
 from common import *
+import matplotlib.pyplot as plt
+import numpy as np
 
 # %%
 
 # %%
-#remplacer les "--" par Na
-df.replace("--", np.nan, inplace=True)
-#sous tableau de donnee
-donnee = df.iloc[:,df.columns.get_loc('1980'):df.columns.get_loc('2021')]
-#remplacer objet par float
-for column in donnee.columns :
-    donnee[column] = pd.to_numeric(donnee[column],errors = 'coerce')
 
 
 # %%
-by_Region = df.groupby(by = 'Region')
 
-for region in df['Region'].unique():
-    for feature in df['Features'].unique():
-        
-        mask_net_get_region_feature = by_Region.get_group(region)['Features'] == feature
-        region_feature = by_Region.get_group(region)[mask_net_get_region_feature]
-
-        region_feature.drop(columns = ['Country', 'Features', 'Region'] , inplace = True)
-
-        for column in region_feature.columns :
-            region_feature[column] = pd.to_numeric(region_feature[column], errors = 'coerce')
-    
-        plt.figure()
-        region_feature.mean().plot()
-        plt.xlabel((feature + " in " + region + " between 1980 and 2020"))
-        plt.show()
         
 
 # %%
-def graph(df, region, feature) :
+def graph_feature_by_region(df, region, feature) :
+    #masque
     by_Region = df.groupby(by = 'Region')
     mask_net_get_region_feature = by_Region.get_group(region)['Features'] == feature
     region_feature = by_Region.get_group(region)[mask_net_get_region_feature]
-
+    #clear valeurs manquantes
     region_feature.drop(columns = ['Country', 'Features', 'Region'] , inplace = True)
-
-    for column in region_feature.columns :
-        region_feature[column] = pd.to_numeric(region_feature[column], errors = 'coerce')
-    
+   
     plt.figure()
+    #moyenne
     region_feature.mean().plot()
     plt.xlabel((feature + " in " + region + " between 1980 and 2020"))
     plt.show()
 
 
 # %%
-graph(df,"Afrique","net generation")
+def graph_feature_by_country(df, country, feature) :
+    #masque
+    by_feature = df.groupby(by = 'Features')
+    print(by_feature.mean())
+    mask_feature_by_country = by_feature.get_group(feature)['Country'] == country
+    country_feature = by_feature.get_group(feature)[mask_feature_by_country]
+    
+    #clear valeurs manquantes
+    country_feature.drop(columns = ['Country', 'Features', 'Region'] , inplace = True)
+    
+    plt.figure()
+    #moyenne
+    country_feature.mean().plot()
+    plt.xlabel((feature + " in " + country + " between 1980 and 2020"))
+    plt.show()
+
+
+# %%
+
+# %%
+
+# %%
+graph_feature_by_country(df_cleared, "Algeria", "net generation")
+
+# %%
