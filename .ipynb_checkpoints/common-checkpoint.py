@@ -1,8 +1,6 @@
 #fichier contenant les données communes à tout le monde
 import pandas as pd 
 import geopandas as gpd 
-import numpy as np
-import matplotlib.pyplot as plt
 
 
 df_orig = pd.read_csv('world-country-electricity.csv')
@@ -19,9 +17,5 @@ df_cleared.dtypes
  #par région
 df_byregion=df_byregion.pivot_table(index=['Region','Features'],aggfunc='sum', fill_value=0)
 df_byregion
-
-
-
-
 
 
