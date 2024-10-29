@@ -14,11 +14,25 @@
 
 from common import *
 
-df['Features'].unique()
+df_orig = pd.read_csv('world-country-electricity.csv')
+#sans valeur fausse, numérisé
+df_cleared=df_orig.dropna(how='all')
+for column in df_cleared.columns[3:]:
+    df_cleared[column]=pd.to_numeric(df_cleared[column], errors='coerce')
+#problème des
+#réorganisation
+df_byfeature=df_cleared.drop('Region', axis=1)
+df_byfeature=df_byfeature.set_index('Features')
+df_bycountry=df_cleared.drop('Region', axis=1)
+df_bycountry=df_bycountry.set_index('Country')
+df_orig.head(10)
+
+ #par région
+df_byregion=df_cleared.pivot_table(index=['Region','Features'],aggfunc='sum', fill_value=0)
 
 # +
-by_Region = df_cleared.groupby(by = 'Region')
-by_Year = df_cleared.groupby(by = 'Year')
+by_Region = df.groupby(by = 'Region')
+#by_Year = df.groupby(by = 'Year')
 
 for region in df['Region'].unique():
     for feature in df['Features'].unique():
@@ -28,8 +42,8 @@ for region in df['Region'].unique():
 
         region_feature.drop(columns = ['Country', 'Features', 'Region'] , inplace = True)
 
-        #for column in region_feature.columns :
-         #   region_feature[column] = pd.to_numeric(region_feature[column], errors = 'coerce')
+        for column in region_feature.columns :
+            region_feature[column] = pd.to_numeric(region_feature[column], errors = 'coerce')
     
         plt.figure()
         region_feature.mean().plot()
