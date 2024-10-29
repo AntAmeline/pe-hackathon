@@ -19,10 +19,21 @@ df['Features'].unique()
 # +
 by_Region = df.groupby(by = 'Region')
 
-mask_net_get_africa = by_Region.get_group('Africa')['Features'] == 'net generation'
-net_gen_africa = by_Region.get_group('Africa')[mask_net_get_africa]
+for region in df['Region'].unique():
+    for feature in df['Features'].unique():
+        
+        mask_net_get_region_feature = by_Region.get_group(region)['Features'] == feature
+        region_feature = by_Region.get_group(region)[mask_net_get_region_feature]
 
-net_gen_africa
+        region_feature.drop(columns = ['Country', 'Features', 'Region'] , inplace = True)
+
+        for column in region_feature.columns :
+            region_feature[column] = pd.to_numeric(region_feature[column], errors = 'coerce')
+    
+        plt.figure()
+        region_feature.mean().plot()
+        plt.xlabel((feature + " in " + region + " between 1980 and 2020"))
+        plt.show()
 # -
 
 
